@@ -9,11 +9,7 @@ import WTVideo from './components/WTVideo';
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 import $ from 'jquery';
 //Render the main component into the dom
-$.ajax('http://localhost:8888/users').done((res) => console.log(res)).error(
-  (e) => {
-    console.log('Erorr');
-    console.log(e);
-  });
+
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={Header}>
