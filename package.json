@@ -67,12 +67,14 @@
     "core-js": "^2.0.0",
     "deep-equal": "^1.0.1",
     "history": "^2.0.0",
+    "jquery": "^2.2.0",
     "material-ui": "^0.14.4",
     "normalize.css": "^3.0.3",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-router": "^1.0.3",
     "react-tap-event-plugin": "^0.2.2",
-    "webtorrent": "^0.73.0"
+    "webtorrent": "^0.73.0",
+    "whatwg-fetch": "^0.11.0"
   }
 }
