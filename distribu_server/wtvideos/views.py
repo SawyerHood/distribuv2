@@ -1,10 +1,10 @@
 from rest_framework import viewsets
 from .models import Video, Comment
 from .serializers import VideoSerializer, CommentSerializer
-from rest_framework.parsers import FileUploadParser, MultiPartParser
+from rest_framework.parsers import FormParser, MultiPartParser
 
 class VideoViewSet(viewsets.ModelViewSet):
-    parser_classes = (FileUploadParser, MultiPartParser)
+    parser_classes = (FormParser, MultiPartParser, )
     """
     API endpoint that allows users to be viewed or edited.
     """
