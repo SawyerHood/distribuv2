@@ -10,6 +10,13 @@ import WTUpload from './components/WTUpload';
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 import $ from 'jquery';
 //Render the main component into the dom
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+// Needed for onTouchTap
+// Can go away when react 1.0 release
+// Check this repo:
+// https://github.com/zilverline/react-tap-event-plugin
+injectTapEventPlugin();
 $.ajax('http://localhost:8888/users').done((res) => console.log(res)).error(
   (e) => {
     console.log('Erorr');
