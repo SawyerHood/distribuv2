@@ -26,7 +26,7 @@ SECRET_KEY = '4%p@@d=d=!fj)axr)*2=##3-rvmyk(e3plh0kxs#nk=#z05i3s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -134,5 +134,11 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.MultiPartParser',
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser'
     ]
 }
