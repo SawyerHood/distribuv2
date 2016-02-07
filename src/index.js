@@ -17,11 +17,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 // Check this repo:
 // https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
-$.ajax('http://localhost:8888/users').done((res) => console.log(res)).error(
-  (e) => {
-    console.log('Erorr');
-    console.log(e);
-  });
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={Header}>
