@@ -7,7 +7,7 @@ class Video(models.Model):
     uploader = models.ForeignKey(User, on_delete=models.CASCADE)
     video_file = models.FileField(upload_to='videos')
     torrent_file = models.FileField(upload_to='torrents', null=True)
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now=True, null=True)
 
 class Comment(models.Model):
     poster = models.ForeignKey(User, on_delete=models.CASCADE)
