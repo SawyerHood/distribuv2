@@ -2,14 +2,17 @@
 
 import React from 'react';
 import AppBar from 'material-ui/lib/app-bar';
-
+import IconButton from 'material-ui/lib/icon-button';
 require('styles//Header.scss');
 
 class Header extends React.Component {
   render() {
     return (
       <div>
-        <AppBar title="distribu" className="header"/>
+        <AppBar
+        title="distribu"
+        className="header"
+        iconElementRight={<IconButton iconClassName='material-icons'>file_upload</IconButton>}/>
         <div className="content">
           {this.props.children}
         </div>
