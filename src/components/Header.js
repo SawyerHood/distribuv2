@@ -8,6 +8,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import { Link } from 'react-router';
 
 require('styles//Header.scss');
+require('styles//Link.scss');
 
 class Header extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class Header extends React.Component {
     return (
       <div>
         <AppBar
-          title="distribu"
+          title={<Link to="/" style={{color: 'white'}}>distribu</Link>}
           className="header"
           iconElementRight={<IconButton iconClassName='material-icons'>file_upload</IconButton>}
           onLeftIconButtonTouchTap={()=>this.toggleLeftNav()}
