@@ -31,6 +31,7 @@ class Header extends React.Component {
           docked={false}
           open={this.state.open}
           onRequestChange={open => this.setState({open})}>
+          <MenuItem><Link to="/">Home</Link></MenuItem>
           <MenuItem><Link to="/signup">Signup</Link></MenuItem>
           <MenuItem><Link to="/upload">Upload</Link></MenuItem>
         </LeftNav>
