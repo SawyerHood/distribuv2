@@ -12,60 +12,61 @@ import Checkbox from 'material-ui/lib/checkbox';
 import ActionFavorite from 'material-ui/lib/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/lib/svg-icons/action/favorite-border';
 import $ from 'jquery';
+import Colors from 'material-ui/lib/styles/colors';
+import moment from 'moment';
 
 require('styles//Wtvideo.scss');
 
 const checkStyle = {
-  marginRight: 100
+  display: 'inline'
 };
 
 class VideoCard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { vidData: null };
   }
 
-  componentDidUpdate(_prevProps, _prevState) {
-  }
   componentDidMount() {
     $.get(
       'http://localhost:8888/videos/' + this.props.id,
-      (data) => this.setState({vidData: data})
+      (data) => {
+        this.setState({vidData: data});
+        console.log(data);
+      }
     );
   }
+
   renderVideo() {
     if (this.state.vidData) {
       return <video ref="vid" src={this.state.vidData.video_file} autoPlay controls/>;
     }
     return <img src="http://lorempixel.com/600/337/nature/"/>;
   }
+
   render() {
     return (
       <div>
       <Card>
         <CardHeader
-          title = 'Best Video Ever'
-        />
+          title = {this.state.vidData ? this.state.vidData.title : "error"}
+          subtitle = {this.state.vidData ? "@" + this.state.vidData.uploader.username : "error"}
+          style={{backgroundColor: Colors.cyan500}}
+          titleStyle={{fontSize: '30px', color: 'white'}}/>
         <CardMedia>
           {this.renderVideo()}
         </CardMedia>
         <CardTitle
-          title = 'username'
-          subtitle = 'uploaded on date'
-        />
+          subtitle = {'Uploaded: ' + (this.state.vidData ? moment(this.state.vidData.date).format('L'): "error")}/>
         <CardText>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+           {(this.state.vidData ? this.state.vidData.description : "error")}
         </CardText>
         <CardActions>
-          <IconButton id = 'iconup' iconClassName = 'material-icons' tooltip = 'up'> thumb_up </IconButton>
-          <IconButton id = 'icondown' iconClassName = 'material-icons' tooltip = 'down'> thumb_down </IconButton>
+          <IconButton id = 'iconup' iconClassName = 'material-icons'> thumb_up </IconButton>
+          <IconButton id = 'icondown' iconClassName = 'material-icons'> thumb_down </IconButton>
+          <IconButton iconClassName='material-icons'>favorite</IconButton>
         </CardActions>
-        <Checkbox
-          checkedIcon = {<ActionFavorite />}
-          unCheckedIcon = {<ActionFavoriteBorder />}
-          style = {checkStyle}
-        />
-      </Card>
+              </Card>
       </div>
     )
   }
