@@ -10,11 +10,15 @@ class UserSerializer(serializers.ModelSerializer):
 
 class VideoSerializer(serializers.ModelSerializer):
     uploader = UserSerializer(read_only=True)
-    
+
     class Meta:
         model = Video
         fields = ('id', 'title', 'description', 'uploader', 'torrent_file', 'date', 'video_file')
 
+class VideoUploadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Video
+        fields = ('id', 'title', 'description', 'uploader', 'torrent_file', 'date', 'video_file')
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
