@@ -14,11 +14,16 @@ import ActionFavoriteBorder from 'material-ui/lib/svg-icons/action/favorite-bord
 import $ from 'jquery';
 import Colors from 'material-ui/lib/styles/colors';
 import moment from 'moment';
+import VideoStream from './WTVideostream.js'
 
 require('styles//Wtvideo.scss');
 
-const checkStyle = {
-  display: 'inline'
+const styles = {
+  checkbox: {
+    position: 'absolute',
+    top: 0,
+    left: 856
+  }
 };
 
 class VideoCard extends React.Component {
@@ -39,34 +44,46 @@ class VideoCard extends React.Component {
 
   renderVideo() {
     if (this.state.vidData) {
-      return <video ref="vid" src={this.state.vidData.video_file} autoPlay controls/>;
+      return <video ref='vid' src={this.state.vidData.video_file} autoPlay controls/>;
     }
-    return <img src="http://lorempixel.com/600/337/nature/"/>;
+    return <img src='http://lorempixel.com/600/337/nature/'/>;
   }
 
   render() {
     return (
-      <div>
-      <Card>
-        <CardHeader
-          title = {this.state.vidData ? this.state.vidData.title : "error"}
-          subtitle = {this.state.vidData ? "@" + this.state.vidData.uploader.username : "error"}
-          style={{backgroundColor: Colors.cyan500}}
-          titleStyle={{fontSize: '30px', color: 'white'}}/>
-        <CardMedia>
-          {this.renderVideo()}
-        </CardMedia>
-        <CardTitle
-          subtitle = {'Uploaded: ' + (this.state.vidData ? moment(this.state.vidData.date).format('L'): "error")}/>
-        <CardText>
-           {(this.state.vidData ? this.state.vidData.description : "error")}
-        </CardText>
-        <CardActions>
-          <IconButton id = 'iconup' iconClassName = 'material-icons'> thumb_up </IconButton>
-          <IconButton id = 'icondown' iconClassName = 'material-icons'> thumb_down </IconButton>
-          <IconButton iconClassName='material-icons'>favorite</IconButton>
-        </CardActions>
-              </Card>
+      <div className = 'pure-g'>
+        <div className = 'pure-u-17-24 pure-img'>
+          <Card>
+            <CardHeader
+              title = {this.state.vidData ? this.state.vidData.title : 'error'}
+              subtitle = {this.state.vidData ? '@' + this.state.vidData.uploader.username : 'error'}
+              style={{backgroundColor: Colors.cyan500}}
+              titleStyle={{fontSize: '30px', color: 'white'}}/>
+            <CardMedia>
+              {this.renderVideo()}
+            </CardMedia>
+          </Card>
+          <Card>
+            <CardHeader
+              actAsExpander = {true}
+              showExpandableButton = {true}
+              subtitle = {'Uploaded: ' + (this.state.vidData ? moment(this.state.vidData.date).format('L'): 'error')}/>
+            <CardText expandable = {true}>
+              {(this.state.vidData ? this.state.vidData.description : 'error')}
+            </CardText>
+            <CardActions expandable = {true}>
+              <IconButton id = 'iconup' iconClassName = 'material-icons' style={{color: 'red'}}> thumb_up </IconButton>
+              <IconButton id = 'icondown' iconClassName = 'material-icons'> thumb_down </IconButton>
+              <Checkbox
+                checkedIcon={<ActionFavorite />}
+                unCheckedIcon={<ActionFavoriteBorder />}
+                style = {styles.checkbox}/>
+            </CardActions>
+          </Card>
+        </div>
+        <div className = 'pure-u-7-24 pure-img'>
+          <VideoStream />
+        </div>
       </div>
     )
   }
