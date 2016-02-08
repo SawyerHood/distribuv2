@@ -5,6 +5,7 @@ import AppBar from 'material-ui/lib/app-bar';
 import IconButton from 'material-ui/lib/icon-button';
 import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
+import { Link } from 'react-router';
 
 require('styles//Header.scss');
 
@@ -23,13 +24,14 @@ class Header extends React.Component {
           title="distribu"
           className="header"
           iconElementRight={<IconButton iconClassName='material-icons'>file_upload</IconButton>}
-          onLeftIconButtonTouchTap={()=>this.toggleLeftNav()}/>
+          onLeftIconButtonTouchTap={()=>this.toggleLeftNav()}
+          onTitleTouchTap={() => this.props.history.push('/')}/>
         <LeftNav
           docked={false}
           open={this.state.open}
           onRequestChange={open => this.setState({open})}>
-          <MenuItem>Signup</MenuItem>
-          <MenuItem>Upload</MenuItem>
+          <MenuItem><Link to="/signup">Signup</Link></MenuItem>
+          <MenuItem><Link to="/upload">Upload</Link></MenuItem>
         </LeftNav>
 
     </div>
