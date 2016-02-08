@@ -23,7 +23,7 @@ ReactDOM.render(
       <IndexRoute component={App}></IndexRoute>
       <Route path="signup" component={Signup}/>
       <Route path="login" component={Login}/>
-      <Route path="video/:vidId" component={WTVideo}/>
+      <Route path="video/:id" component={WTVideo}/>
       <Route path="upload" component={WTUpload}/>
     </Route>
 

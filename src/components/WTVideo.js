@@ -1,31 +1,44 @@
 'use strict';
 
 import React from 'react';
-import RaisedButton from 'material-ui/lib/raised-button'
 import Card from 'material-ui/lib/card/card';
 import CardActions from 'material-ui/lib/card/card-actions';
 import CardHeader from 'material-ui/lib/card/card-header';
 import CardMedia from 'material-ui/lib/card/card-media';
 import CardTitle from 'material-ui/lib/card/card-title';
 import CardText from 'material-ui/lib/card/card-text';
-import Dialog from 'material-ui/lib/dialog';
-import Divider from 'material-ui/lib/divider';
-import Paper from 'material-ui/lib/paper';
-import TextField from 'material-ui/lib/text-field';
-import Colors from 'material-ui/lib/styles/colors';
 import IconButton from 'material-ui/lib/icon-button';
 import Checkbox from 'material-ui/lib/checkbox';
 import ActionFavorite from 'material-ui/lib/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/lib/svg-icons/action/favorite-border';
-import Snackbar from 'material-ui/lib/snackbar';
+import $ from 'jquery';
 
 require('styles//Wtvideo.scss');
 
 const checkStyle = {
-  marginRight: 100,
+  marginRight: 100
 };
 
 class VideoCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidUpdate(_prevProps, _prevState) {
+  }
+  componentDidMount() {
+    $.get(
+      'http://localhost:8888/videos/' + this.props.id,
+      (data) => this.setState({vidData: data})
+    );
+  }
+  renderVideo() {
+    if (this.state.vidData) {
+      return <video ref="vid" src={this.state.vidData.video_file} autoPlay controls/>;
+    }
+    return <img src="http://lorempixel.com/600/337/nature/"/>;
+  }
   render() {
     return (
       <div>
@@ -34,7 +47,7 @@ class VideoCard extends React.Component {
           title = 'Best Video Ever'
         />
         <CardMedia>
-          <img src = 'http://lorempixel.com/600/337/nature/'/>
+          {this.renderVideo()}
         </CardMedia>
         <CardTitle
           title = 'username'
@@ -61,7 +74,7 @@ class VideoCard extends React.Component {
 class WTVideo extends React.Component {
   render() {
     return (
-      <VideoCard/>
+      <VideoCard id={this.props.params.id}/>
     );
   }
 }
