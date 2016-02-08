@@ -8,15 +8,10 @@ require('styles//Header.scss');
 class Header extends React.Component {
   render() {
     return (
-      <div>
         <AppBar
         title="distribu"
         className="header"
         iconElementRight={<IconButton iconClassName='material-icons'>file_upload</IconButton>}/>
-        <div className="content">
-          {this.props.children}
-        </div>
-      </div>
     );
   }
 }

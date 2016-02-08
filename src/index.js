@@ -7,6 +7,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import WTVideo from './components/WTVideo';
 import WTUpload from './components/WTUpload';
+import MainLayout from './components/MainLayout';
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 import $ from 'jquery';
 //Render the main component into the dom
@@ -19,8 +20,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 ReactDOM.render(
   <Router history={browserHistory}>
-    <Route path="/" component={Header}>
-      <IndexRoute component={App}></IndexRoute>
+    <Route path="/" component={MainLayout}>
+      <IndexRoute component={App}/>
       <Route path="signup" component={Signup}/>
       <Route path="login" component={Login}/>
       <Route path="video/:id" component={WTVideo}/>
