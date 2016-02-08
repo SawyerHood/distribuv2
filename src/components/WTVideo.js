@@ -21,45 +21,35 @@ const checkStyle = {
   display: 'inline'
 };
 
-class VideoCard extends React.Component {
+export class VideoCard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { vidData: null };
   }
 
-  componentDidMount() {
-    $.get(
-      'http://localhost:8888/videos/' + this.props.id,
-      (data) => {
-        this.setState({vidData: data});
-        console.log(data);
-      }
-    );
-  }
 
   renderVideo() {
-    if (this.state.vidData) {
-      return <video ref="vid" src={this.state.vidData.video_file} autoPlay controls/>;
+    if (this.props.vidData) {
+      return <video ref="vid" src={this.props.vidData.video_file} autoPlay controls/>;
     }
     return <img src="http://lorempixel.com/600/337/nature/"/>;
   }
 
   render() {
     return (
-      <div>
+      <div style={this.props.style}>
       <Card>
         <CardHeader
-          title = {this.state.vidData ? this.state.vidData.title : "error"}
-          subtitle = {this.state.vidData ? "@" + this.state.vidData.uploader.username : "error"}
+          title = {this.props.vidData ? this.props.vidData.title : "error"}
+          subtitle = {this.props.vidData ? "@" + this.props.vidData.uploader.username : "error"}
           style={{backgroundColor: Colors.cyan500}}
           titleStyle={{fontSize: '30px', color: 'white'}}/>
         <CardMedia>
           {this.renderVideo()}
         </CardMedia>
         <CardTitle
-          subtitle = {'Uploaded: ' + (this.state.vidData ? moment(this.state.vidData.date).format('L'): "error")}/>
+          subtitle = {'Uploaded: ' + (this.props.vidData ? moment(this.props.vidData.date).format('L'): "error")}/>
         <CardText>
-           {(this.state.vidData ? this.state.vidData.description : "error")}
+           {(this.props.vidData ? this.props.vidData.description : "error")}
         </CardText>
         <CardActions>
           <IconButton id = 'iconup' iconClassName = 'material-icons'> thumb_up </IconButton>
@@ -72,10 +62,24 @@ class VideoCard extends React.Component {
   }
 }
 
-class WTVideo extends React.Component {
+export default class WTVideo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {vidData: null};
+  }
+
+  componentDidMount() {
+    $.get(
+      'http://localhost:8888/videos/' + this.props.params.id,
+      (data) => {
+        this.setState({vidData: data});
+        console.log(data);
+      }
+    );
+  }
   render() {
     return (
-      <VideoCard id={this.props.params.id}/>
+      <VideoCard vidData={this.state.vidData}/>
     );
   }
 }
@@ -87,5 +91,3 @@ WTVideo.displayName = 'WTVideo';
 // Uncomment properties you need
 // WTVideo.propTypes = {};
 // WTVideo.defaultProps = {};
-
-export default WTVideo;
