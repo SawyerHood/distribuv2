@@ -7,9 +7,10 @@ require('styles//MainLayout.scss');
 
 class MainLayout extends React.Component {
   render() {
+    console.log(this.props);
     return (
       <div className="mainlayout-component">
-          <Header />
+          <Header history={this.props.history}/>
           <div className="main-content">
               {this.props.children}
           </div>
