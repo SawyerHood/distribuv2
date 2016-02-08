@@ -14,8 +14,10 @@ import ActionFavoriteBorder from 'material-ui/lib/svg-icons/action/favorite-bord
 import $ from 'jquery';
 import Colors from 'material-ui/lib/styles/colors';
 import moment from 'moment';
+import {Link} from 'react-router';
 
 require('styles//Wtvideo.scss');
+require('styles//Link.scss');
 
 const checkStyle = {
   display: 'inline'
@@ -39,7 +41,7 @@ export class VideoCard extends React.Component {
       <div style={this.props.style}>
       <Card>
         <CardHeader
-          title = {this.props.vidData ? this.props.vidData.title : "error"}
+          title = {this.props.vidData ? (<Link style={{color: 'white'}} to={'/video/' + this.props.vidData.id}>{this.props.vidData.title}</Link>) : "error"}
           subtitle = {this.props.vidData ? "@" + this.props.vidData.uploader.username : "error"}
           style={{backgroundColor: Colors.cyan500}}
           titleStyle={{fontSize: '30px', color: 'white'}}/>
@@ -87,7 +89,3 @@ export default class WTVideo extends React.Component {
 
 
 WTVideo.displayName = 'WTVideo';
-
-// Uncomment properties you need
-// WTVideo.propTypes = {};
-// WTVideo.defaultProps = {};

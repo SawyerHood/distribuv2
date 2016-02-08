@@ -25,15 +25,14 @@ class Header extends React.Component {
           title={<Link to="/" style={{color: 'white'}}>distribu</Link>}
           className="header"
           iconElementRight={<IconButton iconClassName='material-icons'>file_upload</IconButton>}
-          onLeftIconButtonTouchTap={()=>this.toggleLeftNav()}
-          onTitleTouchTap={() => this.props.history.push('/')}/>
+          onLeftIconButtonTouchTap={()=>this.toggleLeftNav()}/>
         <LeftNav
           docked={false}
           open={this.state.open}
           onRequestChange={open => this.setState({open})}>
-          <MenuItem><Link to="/">Home</Link></MenuItem>
-          <MenuItem><Link to="/signup">Signup</Link></MenuItem>
-          <MenuItem><Link to="/upload">Upload</Link></MenuItem>
+          <Link to="/"><MenuItem>Home</MenuItem></Link>
+          <Link to="/signup"><MenuItem>Signup</MenuItem></Link>
+          <Link to="/upload"><MenuItem>Upload</MenuItem></Link>
         </LeftNav>
 
     </div>
