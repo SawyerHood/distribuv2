@@ -4,6 +4,7 @@ require('styles/App.css');
 import React from 'react';
 import {VideoCard} from './WTVideo'
 import $ from 'jquery';
+import {getAPIUrl} from '../constants';
 
 class AppComponent extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class AppComponent extends React.Component {
   }
   componentWillMount() {
     $.get(
-      'http://localhost:8888/videos',
+      getAPIUrl() + '/videos',
       (data) => {
         this.setState({videos: data});
       }

@@ -15,6 +15,7 @@ import $ from 'jquery';
 import Colors from 'material-ui/lib/styles/colors';
 import moment from 'moment';
 import {Link} from 'react-router';
+import {getAPIUrl} from '../constants';
 
 require('styles//Wtvideo.scss');
 require('styles//Link.scss');
@@ -72,7 +73,7 @@ export default class WTVideo extends React.Component {
 
   componentDidMount() {
     $.get(
-      'http://localhost:8888/videos/' + this.props.params.id,
+      getAPIUrl() + '/videos/' + this.props.params.id,
       (data) => {
         this.setState({vidData: data});
         console.log(data);
