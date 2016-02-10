@@ -7,20 +7,41 @@ import CardText from 'material-ui/lib/card/card-text';
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Colors from 'material-ui/lib/styles/colors';
+import $ from 'jquery';
+import {getAPIUrl} from '../constants';
 
 require('styles//Login.scss');
 
 class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {username: '', password: ''};
+  }
+  onUsernameType(e) {
+    this.setState({username: e.target.value}); 
+  }
+  onPasswordType(e) {
+    this.setState({password: e.target.value}); 
+  }
+  submitLogin(e) {
+    e.preventDefault();
+    $.post(getAPIUrl() + '/api-token-auth/',
+        {username: this.state.username, password: this.state.password},
+        (data) => console.log(data) 
+    );
+  }
   render() {
     return (
       <Card className="login">
             <CardHeader title="Log in" style={{backgroundColor: Colors.cyan500}} titleStyle={{fontSize: '30px', color: 'white'}}/>
-            <form onSubmit={this.handleSubmit} className="form">
+            <form onSubmit={(e) => this.submitLogin(e)} className="form">
             <TextField
+              onChange={(e) => this.onUsernameType(e)}
               hintText="Username"
               fullWidth/>
             <br/>
             <TextField
+              onChange={(e) => this.onPasswordType(e)}
               hintText="Password"
               type="password"
               fullWidth/>

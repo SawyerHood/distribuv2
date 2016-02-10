@@ -18,7 +18,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:8000'
+    'http://localhost:8000',
+    'http://sawyerhood.com:8000'
 ]
 CORS_ALLOW_HEADERS = (
         'x-requested-with',
@@ -30,7 +31,7 @@ CORS_ALLOW_HEADERS = (
         'range'
     )
 
-BASE_URL = "localhost:8888"
+BASE_URL = "sawyerhood.com:8888"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -59,6 +60,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'wtvideos',
     'corsheaders',
+    'rest_framework_jwt',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -148,7 +150,7 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny'
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
@@ -158,5 +160,10 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
         'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.FormParser'
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ],
 }
