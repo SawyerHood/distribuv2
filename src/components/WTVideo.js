@@ -8,21 +8,15 @@ import CardMedia from 'material-ui/lib/card/card-media';
 import CardTitle from 'material-ui/lib/card/card-title';
 import CardText from 'material-ui/lib/card/card-text';
 import IconButton from 'material-ui/lib/icon-button';
-import Checkbox from 'material-ui/lib/checkbox';
-import ActionFavorite from 'material-ui/lib/svg-icons/action/favorite';
-import ActionFavoriteBorder from 'material-ui/lib/svg-icons/action/favorite-border';
 import $ from 'jquery';
 import Colors from 'material-ui/lib/styles/colors';
 import moment from 'moment';
 import {Link} from 'react-router';
 import {getAPIUrl} from '../constants';
+import WTVideoPlayer from './WTVideoPlayer';
 
 require('styles//Wtvideo.scss');
 require('styles//Link.scss');
-
-const checkStyle = {
-  display: 'inline'
-};
 
 export class VideoCard extends React.Component {
   constructor(props) {
@@ -37,6 +31,13 @@ export class VideoCard extends React.Component {
     return <img src="http://lorempixel.com/600/337/nature/"/>;
   }
 
+  renderTorrentVideo() {
+    if (this.props.vidData) {
+      return <WTVideoPlayer ref="vid" torrentURL={this.props.vidData.torrent_file}/>;
+    }
+    return <img src="http://lorempixel.com/600/337/nature/"/>;
+  }
+
   render() {
     return (
       <div style={this.props.style}>
@@ -47,7 +48,7 @@ export class VideoCard extends React.Component {
           style={{backgroundColor: Colors.cyan500}}
           titleStyle={{fontSize: '30px', color: 'white'}}/>
         <CardMedia>
-          {this.renderVideo()}
+          {this.renderTorrentVideo()}
         </CardMedia>
         <CardTitle
           subtitle = {'Uploaded: ' + (this.props.vidData ? moment(this.props.vidData.date).format('L'): "error")}/>
