@@ -5,6 +5,7 @@ import Card from 'material-ui/lib/card/card';
 import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import $ from 'jquery';
+import {getAPIUrl} from '../constants';
 //import SelectField from 'material-ui/lib/select-field';
 //import MenuItem from 'material-ui/lib/menus/menu-item';
 require('styles//Wtupload.scss');
@@ -25,13 +26,13 @@ class WTUpload extends React.Component {
     data.append('video_file', this._fileInput.files[0]);
     data.append('uploader', 1);
     $.ajax({
-        url: 'http://localhost:8888/videos/',
+        url: getAPIUrl() +  '/videos/',
         type: 'POST',
         processData: false,
         cache: false,
         contentType: false,
         data: data
-    }).done().error();
+    }).done().error((e) => console.log(e));
 
   }
   handleTitleChange(e) {
