@@ -6,6 +6,24 @@ from django.contrib.auth.models import User
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 from rest_framework import status
+from django.core.files import File
+import subprocess
+
+
+def create_torrent(video):
+    res = subprocess.call([
+        "buildtorrent",
+        "-a",
+        "udp://tracker.openbittorrent.com:80",
+        video.video_file.path,
+        "/tmp/out.torrent"
+    ])
+    if res != 0:
+        raise Exception("File not created.")
+    f = open("/tmp/out.torrent", "rb")
+    torrent = File(f)
+    video.torrent_file = torrent
+    video.save()
 
 class VideoViewSet(viewsets.ModelViewSet):
     parser_classes = (FormParser, MultiPartParser, )
@@ -17,9 +35,9 @@ class VideoViewSet(viewsets.ModelViewSet):
     def create(self, request):
         data = request.data
         serializer = VideoUploadSerializer(data=data)
-        import pdb; pdb.set_trace()
         if(serializer.is_valid()):
-            serializer.save()
+            video = serializer.save()
+            create_torrent(video)
             return Response({'status':'video uploaded'})
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
