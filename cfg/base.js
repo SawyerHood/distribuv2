@@ -24,7 +24,7 @@ module.exports = {
     extensions: [
       '',
       '.js',
-      '.jsx'
+      '.jsx',
     ],
     alias: {
       actions: `${ defaultSettings.srcPath }/actions/`,
