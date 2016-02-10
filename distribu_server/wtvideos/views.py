@@ -7,14 +7,18 @@ from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.files import File
+from django.conf import settings
 import subprocess
 
 
 def create_torrent(video):
+    webseed = "http://" + settings.BASE_URL + video.video_file.url
     res = subprocess.call([
         "buildtorrent",
         "-a",
         "udp://tracker.openbittorrent.com:80",
+        "-w",
+        webseed,
         video.video_file.path,
         "/tmp/out.torrent"
     ])
