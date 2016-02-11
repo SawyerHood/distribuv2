@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import Header from './Header';
+import Header from '../components/Header';
 import Paper from 'material-ui/lib/paper';
 require('styles//MainLayout.scss');
 

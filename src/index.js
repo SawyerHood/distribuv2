@@ -7,7 +7,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import WTVideo from './components/WTVideo'
 import WTUpload from './components/WTUpload'
-import MainLayout from './components/MainLayout'
+import MainLayout from './layouts/MainLayout'
 import configureStore from './redux/configureStore'
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 import { Provider } from 'react-redux'
@@ -19,8 +19,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 // Check this repo:
 // https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
-
-const store = configureStore({}, browserHistory);
+const store = configureStore({history: browserHistory});
 
 ReactDOM.render(
   <Provider store={store}>

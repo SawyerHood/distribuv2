@@ -6,9 +6,12 @@ import IconButton from 'material-ui/lib/icon-button';
 import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import { Link } from 'react-router';
-
+import { routeActions } from 'react-router-redux';
+import { connect } from 'react-redux';
 require('styles//Header.scss');
 require('styles//Link.scss');
+
+const mapStateToProps = (state) => state;
 
 class Header extends React.Component {
   constructor(props) {
@@ -17,6 +20,15 @@ class Header extends React.Component {
   }
   toggleLeftNav() {
     this.setState({open: !this.state.open});
+  }
+  createClickFunction(path) {
+    return () => {
+      this.toggleLeftNav();
+      this.props.push(path);
+    }; 
+  }
+  renderMenuLink(text, path) {
+    return <MenuItem onTouchTap={this.createClickFunction(path)}>{text}</MenuItem>;
   }
   render() {
     return (
@@ -30,9 +42,9 @@ class Header extends React.Component {
           docked={false}
           open={this.state.open}
           onRequestChange={open => this.setState({open})}>
-          <Link to="/"><MenuItem>Home</MenuItem></Link>
-          <Link to="/signup"><MenuItem>Signup</MenuItem></Link>
-          <Link to="/upload"><MenuItem>Upload</MenuItem></Link>
+          {this.renderMenuLink('Home', '/')}
+          {this.renderMenuLink('Signup', '/signup')}
+          {this.renderMenuLink('Upload', '/upload')}
         </LeftNav>
 
     </div>
@@ -46,4 +58,4 @@ Header.displayName = 'Header';
 // HeaderComponent.propTypes = {};
 // HeaderComponent.defaultProps = {};
 
-export default Header;
+export default connect(mapStateToProps, routeActions)(Header);
