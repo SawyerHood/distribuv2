@@ -9,8 +9,14 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import Colors from 'material-ui/lib/styles/colors';
 import $ from 'jquery';
 import {getAPIUrl} from '../constants';
+import {actions} from '../redux/modules/user';
+import { connect } from 'react-redux';
 
 require('styles//Login.scss');
+
+const mapStateToProps = (state) => ({
+  user: state.user
+}); 
 
 class Login extends React.Component {
   constructor(props) {
@@ -25,15 +31,12 @@ class Login extends React.Component {
   }
   submitLogin(e) {
     e.preventDefault();
-    $.post(getAPIUrl() + '/api-token-auth/',
-        {username: this.state.username, password: this.state.password},
-        (data) => console.log(data) 
-    );
+    this.props.login(this.state.username, this.state.password); 
   }
   render() {
     return (
       <Card className="login">
-            <CardHeader title="Log in" style={{backgroundColor: Colors.cyan500}} titleStyle={{fontSize: '30px', color: 'white'}}/>
+            <CardHeader title={this.props.user.token ? this.props.user.token  : "Log in"} style={{backgroundColor: Colors.cyan500}} titleStyle={{fontSize: '30px', color: 'white'}}/>
             <form onSubmit={(e) => this.submitLogin(e)} className="form">
             <TextField
               onChange={(e) => this.onUsernameType(e)}
@@ -60,4 +63,4 @@ Login.displayName = 'Login';
 // Login.propTypes = {};
 // Login.defaultProps = {};
 
-export default Login;
+export default connect(mapStateToProps, actions)(Login);
