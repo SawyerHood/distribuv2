@@ -1,3 +1,3 @@
 export function getAPIUrl() {
-  return 'http://localhost:8888';
+  return 'http://sawyerhood.com:8888';
 }
