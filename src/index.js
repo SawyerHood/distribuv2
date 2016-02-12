@@ -3,7 +3,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/Main'
 import Header from './components/Header'
-import Login from './components/Login'
 import LoginView from './views/LoginView'
 import Signup from './components/Signup'
 import WTVideo from './components/WTVideo'
@@ -22,15 +21,33 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin();
 const store = configureStore({history: browserHistory});
 
+function requireLoggedOut(nextState, replace) {
+  if (store.getState().user.loggedIn) {
+    replace({
+      pathname: '/',
+      state: { nextPathname: nextState.location.pathname }
+    });
+  }
+}
+
+function requireLoggedIn(nextState, replace) {
+  if (!store.getState().user.loggedIn) {
+    replace({
+      pathname: '/login',
+      state: { nextPathname: nextState.location.pathname }
+    });
+  }
+}
+
 ReactDOM.render(
   <Provider store={store}>
   <Router history={browserHistory}>
     <Route path="/" component={MainLayout}>
       <IndexRoute component={App}/>
-      <Route path="signup" component={Signup}/>
-      <Route path="login" component={LoginView}/>
+      <Route path="signup" component={Signup} onEnter={requireLoggedOut}/>
+      <Route path="login" component={LoginView} onEnter={requireLoggedOut}/>
       <Route path="video/:id" component={WTVideo}/>
-      <Route path="upload" component={WTUpload}/>
+      <Route path="upload" component={WTUpload} onEnter={requireLoggedIn}/>
     </Route>
 
   </Router>
