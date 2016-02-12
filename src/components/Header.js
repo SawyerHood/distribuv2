@@ -9,17 +9,16 @@ import { Link } from 'react-router';
 import { routeActions } from 'react-router-redux';
 import { actions } from '../redux/modules/user';
 import { connect } from 'react-redux';
-require('styles//Header.scss');
 require('styles//Link.scss');
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  user: state.user
 })
 
 const styles = {
-  rightButton: {
-    marginTop: 5
-  }
+  rightButton: { marginTop: 5 },
+  link: { color: 'white' },
+  header: { marginBottom: 10 }
 };
 
 class Header extends React.Component {
@@ -53,8 +52,8 @@ class Header extends React.Component {
     return (
       <div>
         <AppBar
-          title={<Link to="/" style={{color: 'white'}}>distribu</Link>}
-          className="header"
+          title={<Link to="/" style={styles.link}>distribu</Link>}
+          style={styles.header}
           iconElementRight={this.renderRightButton()}
           onLeftIconButtonTouchTap={()=>this.toggleLeftNav()}/>
         <LeftNav
@@ -72,9 +71,5 @@ class Header extends React.Component {
 }
 
 Header.displayName = 'Header';
-
-// Uncomment properties you need
-// HeaderComponent.propTypes = {};
-// HeaderComponent.defaultProps = {};
 
 export default connect(mapStateToProps, {...routeActions, ...actions})(Header);
