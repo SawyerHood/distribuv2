@@ -2,16 +2,25 @@
 
 import React from 'react';
 import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
+import RaisedButton from 'material-ui/lib/raised-button';
 import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import { Link } from 'react-router';
 import { routeActions } from 'react-router-redux';
+import { actions } from '../redux/modules/user';
 import { connect } from 'react-redux';
 require('styles//Header.scss');
 require('styles//Link.scss');
 
-const mapStateToProps = (state) => state;
+const mapStateToProps = (state) => ({
+  user: state.user,
+})
+
+const styles = {
+  rightButton: {
+    marginTop: 5
+  }
+};
 
 class Header extends React.Component {
   constructor(props) {
@@ -25,10 +34,20 @@ class Header extends React.Component {
     return () => {
       this.toggleLeftNav();
       this.props.push(path);
-    }; 
+    };
   }
   renderMenuLink(text, path) {
     return <MenuItem onTouchTap={this.createClickFunction(path)}>{text}</MenuItem>;
+  }
+  renderRightButton() {
+    const {loggedIn} = this.props.user;
+    return (<RaisedButton label={loggedIn ? 'Logout' : 'Login'}
+      style={styles.rightButton}
+      onTouchTap={
+        loggedIn ?
+          () => this.props.logout() :
+          () => this.props.push('/login')
+        }/>);
   }
   render() {
     return (
@@ -36,7 +55,7 @@ class Header extends React.Component {
         <AppBar
           title={<Link to="/" style={{color: 'white'}}>distribu</Link>}
           className="header"
-          iconElementRight={<IconButton iconClassName='material-icons'>file_upload</IconButton>}
+          iconElementRight={this.renderRightButton()}
           onLeftIconButtonTouchTap={()=>this.toggleLeftNav()}/>
         <LeftNav
           docked={false}
@@ -58,4 +77,4 @@ Header.displayName = 'Header';
 // HeaderComponent.propTypes = {};
 // HeaderComponent.defaultProps = {};
 
-export default connect(mapStateToProps, routeActions)(Header);
+export default connect(mapStateToProps, {...routeActions, ...actions})(Header);

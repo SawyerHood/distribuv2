@@ -5,6 +5,7 @@ import { routeActions } from 'react-router-redux'
 export const BEGIN_LOGIN = 'BEGIN_LOGIN';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const LOGOUT = 'LOGOUT';
 
 export const beginLogin = (username) => {
   return {
@@ -25,6 +26,13 @@ export const loginError = () => {
     type: LOGIN_ERROR
   };
 };
+
+export const logout = (newRoute = "/login") => {
+  return (dispatch) => {
+    dispatch({type: LOGOUT});
+    dispatch(routeActions.push(newRoute));
+  }
+}
 
 export const login = (username, password, newRoute = "/") => {
   return (dispatch) => {
@@ -50,6 +58,7 @@ const ACTION_HANDLERS = {
   [BEGIN_LOGIN]: (state, action) => {return {...state, username: action.payload, loggingIn: true}},
   [LOGIN_SUCCESS]: (state, action) => {return {...state, token: action.payload, loggingIn: false, loggedIn: true}},
   [LOGIN_ERROR]: (state, action) => {return {...state, loggingIn: false, username: '', loginError: true}},
+  [LOGOUT]: (state, action) => {return {...state, loggedIn: false, username: '', token: ''}}
 };
 
 const initialState = {
