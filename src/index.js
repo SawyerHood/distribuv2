@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import App from './components/Main'
 import Header from './components/Header'
 import Login from './components/Login'
+import LoginView from './views/LoginView'
 import Signup from './components/Signup'
 import WTVideo from './components/WTVideo'
 import WTUpload from './components/WTUpload'
@@ -27,7 +28,7 @@ ReactDOM.render(
     <Route path="/" component={MainLayout}>
       <IndexRoute component={App}/>
       <Route path="signup" component={Signup}/>
-      <Route path="login" component={Login}/>
+      <Route path="login" component={LoginView}/>
       <Route path="video/:id" component={WTVideo}/>
       <Route path="upload" component={WTUpload}/>
     </Route>

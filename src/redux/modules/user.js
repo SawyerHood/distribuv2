@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import {getAPIUrl} from '../../constants';
+import { routeActions } from 'react-router-redux'
 
 export const BEGIN_LOGIN = 'BEGIN_LOGIN';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -25,12 +26,15 @@ export const loginError = () => {
   };
 };
 
-export const login = (username, password) => {
+export const login = (username, password, newRoute = "/") => {
   return (dispatch) => {
     dispatch(beginLogin(username));
     $.post(getAPIUrl() + '/api-token-auth/',
         {username, password},
-        ({token}) => dispatch(loginSuccess(token)) 
+        ({token}) => {
+          dispatch(loginSuccess(token));
+          dispatch(routeActions.push(newRoute));
+        }
     ).fail(() => dispatch(loginError()));
   }
 };
@@ -49,9 +53,9 @@ const ACTION_HANDLERS = {
 };
 
 const initialState = {
-  username: '', 
-  token: '', 
-  loggedIn: false, 
+  username: '',
+  token: '',
+  loggedIn: false,
   loggingIn: false,
   loginError: false
 };
