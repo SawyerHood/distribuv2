@@ -2,13 +2,24 @@
 
 import React from 'react';
 import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
+import RaisedButton from 'material-ui/lib/raised-button';
 import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import { Link } from 'react-router';
-
-require('styles//Header.scss');
+import { routeActions } from 'react-router-redux';
+import { actions } from '../redux/modules/user';
+import { connect } from 'react-redux';
 require('styles//Link.scss');
+
+const mapStateToProps = (state) => ({
+  user: state.user
+})
+
+const styles = {
+  rightButton: { marginTop: 5 },
+  link: { color: 'white' },
+  header: { marginBottom: 10 }
+};
 
 class Header extends React.Component {
   constructor(props) {
@@ -18,21 +29,40 @@ class Header extends React.Component {
   toggleLeftNav() {
     this.setState({open: !this.state.open});
   }
+  createClickFunction(path) {
+    return () => {
+      this.toggleLeftNav();
+      this.props.push(path);
+    };
+  }
+  renderMenuLink(text, path) {
+    return <MenuItem onTouchTap={this.createClickFunction(path)}>{text}</MenuItem>;
+  }
+  renderRightButton() {
+    const {loggedIn} = this.props.user;
+    return (<RaisedButton label={loggedIn ? 'Logout' : 'Login'}
+      style={styles.rightButton}
+      onTouchTap={
+        loggedIn ?
+          () => this.props.logout() :
+          () => this.props.push('/login')
+        }/>);
+  }
   render() {
     return (
       <div>
         <AppBar
-          title={<Link to="/" style={{color: 'white'}}>distribu</Link>}
-          className="header"
-          iconElementRight={<IconButton iconClassName='material-icons'>file_upload</IconButton>}
+          title={<Link to="/" style={styles.link}>distribu</Link>}
+          style={styles.header}
+          iconElementRight={this.renderRightButton()}
           onLeftIconButtonTouchTap={()=>this.toggleLeftNav()}/>
         <LeftNav
           docked={false}
           open={this.state.open}
           onRequestChange={open => this.setState({open})}>
-          <Link to="/"><MenuItem>Home</MenuItem></Link>
-          <Link to="/signup"><MenuItem>Signup</MenuItem></Link>
-          <Link to="/upload"><MenuItem>Upload</MenuItem></Link>
+          {this.renderMenuLink('Home', '/')}
+          {this.renderMenuLink('Signup', '/signup')}
+          {this.renderMenuLink('Upload', '/upload')}
         </LeftNav>
 
     </div>
@@ -42,8 +72,4 @@ class Header extends React.Component {
 
 Header.displayName = 'Header';
 
-// Uncomment properties you need
-// HeaderComponent.propTypes = {};
-// HeaderComponent.defaultProps = {};
-
-export default Header;
+export default connect(mapStateToProps, {...routeActions, ...actions})(Header);
