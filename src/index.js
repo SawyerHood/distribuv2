@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import App from './components/Main'
 import Header from './components/Header'
 import LoginView from './views/LoginView'
+import SignupView from './views/SignupView'
 import Signup from './components/Signup'
 import WTVideo from './components/WTVideo'
 import WTUpload from './components/WTUpload'
@@ -44,7 +45,7 @@ ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={MainLayout}>
       <IndexRoute component={App}/>
-      <Route path="signup" component={Signup} onEnter={requireLoggedOut}/>
+      <Route path="signup" component={SignupView} onEnter={requireLoggedOut}/>
       <Route path="login" component={LoginView} onEnter={requireLoggedOut}/>
       <Route path="video/:id" component={WTVideo}/>
       <Route path="upload" component={WTUpload} onEnter={requireLoggedIn}/>
