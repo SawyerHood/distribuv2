@@ -22,7 +22,6 @@ const mapStateToProps = (state) => ({
 
 class LoginView extends React.Component {
   submitLogin(values) {
-    console.log("Here");
     this.props.login(values.username, values.password);
   }
   render() {

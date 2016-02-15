@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.files import File
 from django.conf import settings
+from rest_framework.permissions import AllowAny
 import subprocess
 
 
@@ -49,6 +50,7 @@ class VideoViewSet(viewsets.ModelViewSet):
 
 # ViewSets define the view behavior.
 class UserViewSet(viewsets.ModelViewSet):
+    permission_classes = [AllowAny]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
