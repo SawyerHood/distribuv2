@@ -35,7 +35,13 @@ class SignupView extends React.Component {
         .done(() => {
           this.props.push('/login');
           resolve();
-        }).fail(() => console.log('fail'));
+        }).fail((data) => {
+          const errors = {_error: 'Signup Failed'};
+          for (let key in data.responseJSON) {
+            errors[key] = data.responseJSON[key][0];
+          }
+          reject(errors);
+        });
     });
   }
 
