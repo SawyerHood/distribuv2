@@ -2,18 +2,29 @@
 
 import React from 'react';
 import Header from '../components/Header';
-import Paper from 'material-ui/lib/paper';
+import Snackbar from 'material-ui/lib/snackbar';
+import { connect } from 'react-redux';
+import { actions } from '../redux/modules/notifications';
 require('styles//MainLayout.scss');
+
+const mapStateToProps = (state) => ({
+    notifications: state.notifications
+});
 
 class MainLayout extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <div className="mainlayout-component">
           <Header history={this.props.history}/>
           <div className="main-content">
               {this.props.children}
           </div>
+          <Snackbar
+            message={this.props.notifications.message}
+            autoHideDuration={4000}
+            open={this.props.notifications.open}
+            onRequestClose={() => this.props.closeNotification()}
+            />
       </div>
     );
   }
@@ -25,4 +36,4 @@ MainLayout.displayName = 'MainLayout';
 // MainLayout.propTypes = {};
 // MainLayout.defaultProps = {};
 
-export default MainLayout;
+export default connect(mapStateToProps, actions)(MainLayout);

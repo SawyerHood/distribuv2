@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 require('styles//Link.scss');
 
 const mapStateToProps = (state) => ({
-  user: state.user
+  user: state.user,
 })
 
 const styles = {
@@ -64,7 +64,6 @@ class Header extends React.Component {
           {this.renderMenuLink('Signup', '/signup')}
           {this.renderMenuLink('Upload', '/upload')}
         </LeftNav>
-
     </div>
     );
   }

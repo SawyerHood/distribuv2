@@ -1,5 +1,6 @@
 import $ from 'jquery';
-import {getAPIUrl} from '../../constants';
+import { getAPIUrl } from '../../constants';
+import { actions as notificationActions } from './notifications'
 import { routeActions } from 'react-router-redux'
 
 export const BEGIN_LOGIN = 'BEGIN_LOGIN';
@@ -41,9 +42,13 @@ export const login = (username, password, newRoute = "/") => {
         {username, password},
         ({token}) => {
           dispatch(loginSuccess(token));
+          dispatch(notificationActions.notify('Login Sucessful'));
           dispatch(routeActions.push(newRoute));
         }
-    ).fail(() => dispatch(loginError()));
+    ).fail(() => {
+      dispatch(loginError());
+      dispatch(notificationActions.notify('Login Failed'));
+    });
   }
 };
 
@@ -69,7 +74,7 @@ const initialState = {
   loginError: false
 };
 
-export default function userReducer(state = {username: ''}, action) {
+export default function userReducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type];
   return handler ? handler(state, action) : state;
 }
