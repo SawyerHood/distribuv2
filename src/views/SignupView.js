@@ -2,6 +2,7 @@
 'use strict';
 import { Link } from 'react-router';
 import { routeActions } from 'react-router-redux';
+import { actions } from '../redux/modules/notifications';
 import React from 'react';
 import Card from 'material-ui/lib/card/card';
 import CardHeader from 'material-ui/lib/card/card-header';
@@ -34,12 +35,14 @@ class SignupView extends React.Component {
       $.post(getAPIUrl() + '/users/', json)
         .done(() => {
           this.props.push('/login');
+          this.props.notify('Signup Sucessful, please log in.');
           resolve();
         }).fail((data) => {
           const errors = {_error: 'Signup Failed'};
           for (let key in data.responseJSON) {
             errors[key] = data.responseJSON[key][0];
           }
+          this.props.notify('Signup Failed');
           reject(errors);
         });
     });
@@ -58,4 +61,4 @@ class SignupView extends React.Component {
 
 SignupView.displayName = 'SignupView';
 
-export default connect(mapStateToProps, routeActions)(SignupView);
+export default connect(mapStateToProps, {...routeActions, ...actions})(SignupView);
